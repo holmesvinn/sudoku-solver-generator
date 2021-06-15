@@ -1,0 +1,125 @@
+.header {
+  display: flex;
+  height: auto;
+  border-radius: 15px;
+  margin: 10px;
+  flex-wrap: wrap;
+}
+
+.header > div {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.grid {
+  margin-top: calc(60px - 48px);
+  height: 45px;
+}
+.grid::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: orange;
+  display: inline-block;
+  box-shadow: 15px 15px 0px 0px orange, 0px 15px 0px 0px orange,
+    15px 0px 0px 0px orange;
+}
+
+.grid-size {
+  min-width: 65px;
+}
+
+div.title {
+  flex: 4 1 auto;
+}
+
+.title > h3 {
+  float: right;
+}
+
+.user-icon {
+  width: 25px;
+  height: 25px;
+  margin-top: 16px;
+}
+
+.button-wrapper {
+  display: inline-block;
+}
+
+.button-wrapper > button {
+  margin-top: 20px;
+  position: relative;
+}
+
+.button-wrapper > .solver {
+  float: left;
+}
+
+.button-wrapper > .generator {
+  float: right;
+}
+
+@keyframes solverToGenerator {
+  from {
+    left: calc(1%);
+  }
+  to {
+    left: calc(80%);
+  }
+}
+
+@keyframes generatorToSolver {
+  from {
+    right: calc(1%);
+  }
+  to {
+    right: calc(70%);
+  }
+}
+
+@keyframes revertGenerator {
+  from {
+    right: calc(70%);
+  }
+  to {
+    right: calc(1%);
+  }
+}
+
+@keyframes revertSolver {
+  from {
+    left: calc(80%);
+  }
+  to {
+    left: calc(1%);
+  }
+}
+
+.solverToGenerator {
+  animation-name: solverToGenerator;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.17, 0.67, 0.47, 1.56);
+  left: calc(80%);
+}
+
+.generatorToSolver {
+  animation-name: generatorToSolver;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.17, 0.67, 0.47, 1.56);
+  right: calc(70%);
+}
+
+.solverRevert {
+  animation-name: revertSolver;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.17, 0.67, 0.47, 1.56);
+  left: calc(1%);
+}
+
+.generatorRevert {
+  animation-name: revertGenerator;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.17, 0.67, 0.47, 1.56);
+  right: calc(1%);
+}

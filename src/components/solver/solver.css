@@ -1,0 +1,16 @@
+input {
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
+
+.sudoku-area {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.sudoku-area > .vertical-line {
+  width: 1px;
+  height: inherit;
+  background: black;
+}
