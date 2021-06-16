@@ -7,24 +7,32 @@ import {
   fillInputs,
   copy,
 } from "../../utils/logics";
-import GetGridRows from "./gridUnits";
+import { GetGridRows, NumpadButtons } from "./gridUnits";
 
 export const GridContext = React.createContext();
+export const ButtonContext = React.createContext();
 
 export default function Solver() {
+  let focusedInputElement;
   let solvedResult = [];
+  let inputsList = [];
+
+  // const [focusedElCount, setFocusedElCount] = React.useState(0);
   const dimensions = useSelector((state) => state.sudoku.dimensions);
   const { grid_rows, grid_cols } = getRowsAndCols(dimensions);
+
+  React.useEffect(() => {
+    console.log("componentMount");
+    inputsList = [].slice.call(document.getElementsByClassName("input_el"));
+  }, []);
 
   const handleSolve = () => {
     const SudokuArray = [];
     let row = 0;
     let col = 0;
     let k;
-    const inputsList = [].slice.call(
-      document.getElementsByClassName("input_el")
-    );
     const inputsElementsList = [];
+
     const inputListValues = inputsList.map((el) => el.value);
     for (let i = 0; i <= 8; i++) {
       k = i * 9;
@@ -40,9 +48,28 @@ export default function Solver() {
     fillInputs(solvedResult, inputsElementsList);
   };
 
+  const updatedFocusedElement = (ref) => {
+    focusedInputElement = ref;
+  };
+
+  const handleButtonClick = (num) => {
+    console.log(num);
+    if (focusedInputElement) focusedInputElement.value = num;
+    else {
+      inputsList[0].value = num;
+      // setFocusedElCount((prevCount) => prevCount + 1);
+    }
+  };
+
   return (
     <>
-      <GridContext.Provider value={{ rows: grid_rows, cols: grid_cols }}>
+      <GridContext.Provider
+        value={{
+          rows: grid_rows,
+          cols: grid_cols,
+          focusEvent: updatedFocusedElement,
+        }}
+      >
         <div className="sudoku-area">
           <div className="solver_inputs">
             {[...Array(grid_rows)].map((_, index) => (
@@ -52,8 +79,13 @@ export default function Solver() {
             ))}
           </div>
           <div className="vertical-line"></div>
-          {/* Logic to Generate Numpad */}
-          {/* <div className="Numpad">
+          <div>
+            <ButtonContext.Provider
+              value={{ handleClick: handleButtonClick, rows: 3 }}
+            >
+              <NumpadButtons />
+              {/* Logic to Generate Numpad */}
+              {/* <div className="Numpad">
           {[...Array(Number(3))].map((_, index) => (
             <React.Fragment key={index}>
               <GetGrid
@@ -65,7 +97,10 @@ export default function Solver() {
             </React.Fragment>
           ))}
         </div> */}
+            </ButtonContext.Provider>
+          </div>
         </div>
+
         <div className="buttons-Area">
           <button onClick={handleSolve}>Solve</button>
           <button onClick={() => copy(solvedResult, false)}>Copy</button>

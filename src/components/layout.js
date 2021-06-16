@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { getInitialArrayState, getRowsAndCols } from "../utils/logics";
+import React from "react";
 
 import "./layout.css";
 import {
