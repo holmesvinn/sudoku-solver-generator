@@ -16,6 +16,7 @@ export default function Solver() {
   let focusedInputElement;
   let solvedResult = [];
   let inputsList = [];
+  let focusNext = false;
 
   // const [focusedElCount, setFocusedElCount] = React.useState(0);
   const dimensions = useSelector((state) => state.sudoku.dimensions);
@@ -54,11 +55,26 @@ export default function Solver() {
 
   const handleButtonClick = (num) => {
     console.log(num);
-    if (focusedInputElement) focusedInputElement.value = num;
-    else {
-      inputsList[0].value = num;
-      // setFocusedElCount((prevCount) => prevCount + 1);
+    if (!focusedInputElement) {
+      focusedInputElement = inputsList[0];
     }
+    focusedInputElement.value = num;
+    if (focusNext) {
+      focusedInputElement = focusedInputElement.nextElementSibling
+        ? focusedInputElement.nextElementSibling
+        : focusedInputElement.parentElement.nextElementSibling
+        ? focusedInputElement.parentElement.nextElementSibling.firstElementChild
+        : focusedInputElement.parentElement.parentElement.nextElementSibling
+        ? focusedInputElement.parentElement.parentElement.nextElementSibling
+            .firstElementChild.firstElementChild
+        : inputsList[0];
+    }
+    if (focusedInputElement === null || focusedInputElement === undefined)
+      focusedInputElement = inputsList[0];
+    focusedInputElement.focus();
+  };
+  const updateFocusType = (element) => {
+    focusNext = element.checked ? true : false;
   };
 
   return (
@@ -98,6 +114,18 @@ export default function Solver() {
           ))}
         </div> */}
             </ButtonContext.Provider>
+
+            <div>
+              <input
+                type="checkbox"
+                name="test"
+                onClick={($event) => {
+                  $event.stopPropagation();
+                  updateFocusType($event.currentTarget);
+                }}
+              />
+              Focus next
+            </div>
           </div>
         </div>
 

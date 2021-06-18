@@ -3,7 +3,6 @@ import { GridContext, ButtonContext } from "./solver";
 
 function GetRowsInput() {
   const { rows, focusEvent } = React.useContext(GridContext);
-  const ref = React.createRef();
   return (
     <>
       {[...Array(Number(rows))].map((_, index) => {
@@ -12,12 +11,12 @@ function GetRowsInput() {
             <input
               maxLength="1"
               type="text"
-              ref={ref}
               pattern="(^\d+$)"
-              // onFocus={($event) => {
-              //   $event.stopPropagation();
-              //   focusEvent(ref);
-              // }}
+              onClick={($event) => {
+                $event.stopPropagation();
+                console.log($event);
+                focusEvent($event.target);
+              }}
               className="input_el"
               style={{ display: "inline-block" }}
             />
