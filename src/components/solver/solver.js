@@ -24,6 +24,7 @@ export default function Solver() {
 
   React.useEffect(() => {
     console.log("componentMount");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     inputsList = [].slice.call(document.getElementsByClassName("input_el"));
   }, []);
 
@@ -77,6 +78,10 @@ export default function Solver() {
     focusNext = element.checked ? true : false;
   };
 
+  const reset = () => {
+    inputsList.forEach((el) => (el.value = null));
+  };
+
   return (
     <>
       <GridContext.Provider
@@ -100,19 +105,6 @@ export default function Solver() {
               value={{ handleClick: handleButtonClick, rows: 3 }}
             >
               <NumpadButtons />
-              {/* Logic to Generate Numpad */}
-              {/* <div className="Numpad">
-          {[...Array(Number(3))].map((_, index) => (
-            <React.Fragment key={index}>
-              <GetGrid
-                rows={1}
-                columns={3}
-                element="button"
-                list={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
-              />
-            </React.Fragment>
-          ))}
-        </div> */}
             </ButtonContext.Provider>
 
             <div>
@@ -135,6 +127,7 @@ export default function Solver() {
           <button onClick={() => copy(solvedResult, true)}>
             Copy as Plain String
           </button>
+          <button onClick={() => reset()}>Reset </button>
         </div>
       </GridContext.Provider>
     </>
