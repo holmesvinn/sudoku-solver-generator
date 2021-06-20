@@ -123,3 +123,58 @@ div.title {
   animation-timing-function: cubic-bezier(0.17, 0.67, 0.47, 1.56);
   right: calc(1%);
 }
+
+.grid-selection {
+  position: absolute;
+  background: aliceblue;
+  width: 185px;
+  height: 90px;
+  display: none;
+  box-shadow: 20px 20px 6px palegoldenrod;
+}
+
+.grid-selection:hover {
+  display: block;
+}
+
+.grid:hover + .grid-selection {
+  display: block;
+}
+
+.basic-grid {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: aqua;
+  position: absolute;
+  left: calc(100% - 50px);
+  top: 30px;
+  box-shadow: 15px 0px 0px 0px red, 0px 15px 0px 0px red, 15px 15px 0px 0px red;
+}
+.advanced-grid {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: aqua;
+  position: absolute;
+  right: calc(100% - 50px);
+  top: 30px;
+  box-shadow: 10px 0px 0px 0px red, 0px 10px 0px 0px red, 0px 15px 0px 0px red,
+    15px 0px 0px 0px red, 15px 15px 0px 0px red;
+}
+
+.advanced-grid::before {
+  content: "Basic";
+  top: 29px;
+  position: relative;
+  left: -2px;
+  font-size: 12px;
+}
+
+.basic-grid::before {
+  content: "Advanced";
+  top: 29px;
+  position: relative;
+  left: -13px;
+  font-size: 12px;
+}

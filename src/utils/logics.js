@@ -27,14 +27,14 @@ export const getNextIndex = (sArray) => {
   return [nextRIndex, nextCIndex++];
 };
 
-const findGridbasePositon = (row, col) => {
-  const grow = Math.floor(row / 3);
-  const gcol = Math.floor(col / 3);
+const findGridbasePositon = (row, col, dimensions) => {
+  const grow = Math.floor(row / dimensions[1][0]);
+  const gcol = Math.floor(col / dimensions[1][1]);
 
-  return [grow * 3, gcol * 3];
+  return [grow * dimensions[1][0], gcol * dimensions[1][1]];
 };
 
-const isSafePlace = (board, row, col, value) => {
+const isSafePlace = (board, row, col, value, dimensions) => {
   for (let i = 0; i < board[0].length; i++) {
     if (board[row][i] === value.toString()) {
       return false;
@@ -47,10 +47,10 @@ const isSafePlace = (board, row, col, value) => {
     }
   }
 
-  const [grow, gcol] = findGridbasePositon(row, col);
+  const [grow, gcol] = findGridbasePositon(row, col, dimensions);
 
-  for (let i = grow; i < grow + 3; i++) {
-    for (let j = gcol; j < gcol + 3; j++) {
+  for (let i = grow; i < grow + dimensions[1][0]; i++) {
+    for (let j = gcol; j < gcol + dimensions[1][1]; j++) {
       if (board[i][j] === value.toString()) {
         return false;
       }
@@ -69,36 +69,36 @@ const isAllFilled = (board) => {
   return true;
 };
 
-const sudokuSolver = (board, row, col) => {
-  if (col > 8) {
+const sudokuSolver = (board, row, col, dimensions) => {
+  if (col > dimensions[0][0] - 1) {
     row = row + 1;
     col = 0;
   }
 
-  if (Number(row) > 8) {
+  if (Number(row) > dimensions[0][0] - 1) {
     Boardd = JSON.parse(JSON.stringify(board));
     return Boardd;
   }
 
   if (board[row][col] === ".") {
     for (let k = 1; k <= board.length; k++) {
-      if (isSafePlace(board, row, col, k)) {
+      if (isSafePlace(board, row, col, k, dimensions)) {
         board[row][col] = k.toString();
-        board = sudokuSolver(board, row, col + 1);
+        board = sudokuSolver(board, row, col + 1, dimensions);
         if (!isAllFilled(board)) {
           board[row][col] = ".";
         }
       }
     }
   } else {
-    board = sudokuSolver(board, row, col + 1);
+    board = sudokuSolver(board, row, col + 1, dimensions);
   }
 
   return board;
 };
 
-const solveSudoku = (board) => {
-  sudokuSolver(board, 0, 0);
+const solveSudoku = (board, dimensions) => {
+  sudokuSolver(board, 0, 0, dimensions);
   console.log("from logics", Boardd);
 };
 
@@ -125,7 +125,7 @@ export const fillInputs = (solvedArray, inputsElementsList) => {
   }
 };
 
-export const solveSudokuArray = (sudokuArray) => {
-  solveSudoku(JSON.parse(JSON.stringify(sudokuArray)));
+export const solveSudokuArray = (sudokuArray, dimensions) => {
+  solveSudoku(JSON.parse(JSON.stringify(sudokuArray)), dimensions);
   return Boardd;
 };

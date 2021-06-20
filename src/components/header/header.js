@@ -1,10 +1,14 @@
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { setGridSize } from "../../redux/actions";
 import "./header.css";
 
 export default function Header() {
   let right = "generator";
   const solver = useRef();
+  const dispatch = useDispatch();
   const generator = useRef();
+
   const handleClick = (btn) => {
     switch (btn) {
       case "solver":
@@ -37,6 +41,22 @@ export default function Header() {
       default:
     }
   };
+
+  const updateDimention = (dimension) => {
+    const payload =
+      dimension === "advanced"
+        ? [
+            [9, 9],
+            [3, 3],
+          ]
+        : [
+            [6, 6],
+            [3, 2],
+          ];
+
+    dispatch(setGridSize(payload));
+  };
+
   return (
     <div className="header card">
       <div className="title">
@@ -60,6 +80,17 @@ export default function Header() {
       </div>
       <div className="grid-size">
         <div className="grid"></div>
+
+        <div className="grid-selection">
+          <div
+            className="basic-grid"
+            onClick={() => updateDimention("advanced")}
+          ></div>
+          <div
+            className="advanced-grid"
+            onClick={() => updateDimention("basic")}
+          ></div>
+        </div>
       </div>
 
       <div className="grid-size">

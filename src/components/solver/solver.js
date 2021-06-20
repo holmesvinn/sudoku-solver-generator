@@ -20,13 +20,14 @@ export default function Solver() {
 
   // const [focusedElCount, setFocusedElCount] = React.useState(0);
   const dimensions = useSelector((state) => state.sudoku.dimensions);
-  const { grid_rows, grid_cols } = getRowsAndCols(dimensions);
+  const { rows, grid_rows, grid_cols } = getRowsAndCols(dimensions);
 
   React.useEffect(() => {
-    console.log("componentMount");
+    console.log("dimensions change");
     // eslint-disable-next-line react-hooks/exhaustive-deps
     inputsList = [].slice.call(document.getElementsByClassName("input_el"));
-  }, []);
+    reset();
+  }, [dimensions]);
 
   const handleSolve = () => {
     const SudokuArray = [];
@@ -36,16 +37,16 @@ export default function Solver() {
     const inputsElementsList = [];
 
     const inputListValues = inputsList.map((el) => el.value);
-    for (let i = 0; i <= 8; i++) {
-      k = i * 9;
+    for (let i = 0; i < rows; i++) {
+      k = i * rows;
       SudokuArray.push(
-        inputListValues.slice(k, k + 9).map((el) => (el === "" ? "." : el))
+        inputListValues.slice(k, k + rows).map((el) => (el === "" ? "." : el))
       );
-      inputsElementsList.push(inputsList.slice(k, k + 9));
+      inputsElementsList.push(inputsList.slice(k, k + rows));
     }
 
     console.log("inside HandleClick", SudokuArray, row, col);
-    solvedResult = solveSudokuArray(SudokuArray);
+    solvedResult = solveSudokuArray(SudokuArray, dimensions);
     console.log("result in solver", solvedResult);
     fillInputs(solvedResult, inputsElementsList);
   };
@@ -74,6 +75,7 @@ export default function Solver() {
       focusedInputElement = inputsList[0];
     focusedInputElement.focus();
   };
+
   const updateFocusType = (element) => {
     focusNext = element.checked ? true : false;
   };
