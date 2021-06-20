@@ -178,3 +178,18 @@ div.title {
   left: -13px;
   font-size: 12px;
 }
+
+.basic-grid-overlay {
+  position: absolute;
+  z-index: 999;
+  width: 100px;
+  height: 100px;
+}
+
+.advanced-grid-overlay {
+  position: absolute;
+  z-index: 999;
+  width: 100px;
+  height: 100px;
+  right: 0;
+}

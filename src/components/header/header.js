@@ -83,13 +83,16 @@ export default function Header() {
 
         <div className="grid-selection">
           <div
-            className="basic-grid"
+            onClick={() => updateDimention("basic")}
+            className="basic-grid-overlay"
+          ></div>
+
+          <div
+            className="advanced-grid-overlay"
             onClick={() => updateDimention("advanced")}
           ></div>
-          <div
-            className="advanced-grid"
-            onClick={() => updateDimention("basic")}
-          ></div>
+          <div className="basic-grid"></div>
+          <div className="advanced-grid"></div>
         </div>
       </div>
 
