@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { setGridSize } from "../../redux/actions";
+import { setGridSize, setSudokuType } from "../../redux/actions";
 import "./header.css";
 
 export default function Header() {
@@ -9,6 +9,11 @@ export default function Header() {
   const dispatch = useDispatch();
   const generator = useRef();
 
+  /**
+   * method toggles the view and functionality between sudoku solver and sudoku generator logic
+   * method also updates the classes of the buttons so that they can animate
+   * @param {solver or generator} btn
+   */
   const handleClick = (btn) => {
     switch (btn) {
       case "solver":
@@ -40,8 +45,13 @@ export default function Header() {
         break;
       default:
     }
+    dispatch(setSudokuType(btn));
   };
 
+  /**
+   *  method updates the dimension of the grid to store
+   *  @param {[[row,col],[grid_size_row, grid_size_col]]]} dimension
+   */
   const updateDimention = (dimension) => {
     const payload =
       dimension === "advanced"
@@ -100,6 +110,7 @@ export default function Header() {
         <img
           alt="user Icon"
           className="user-icon"
+          // TODO: update this to theme toggler
           src="https://freesvg.org/img/abstract-user-flat-1.png"
         />
       </div>

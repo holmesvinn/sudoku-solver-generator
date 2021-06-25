@@ -8,7 +8,6 @@ import {
   Switch,
 } from "react-router-dom";
 import Solver from "../components/solver/solver";
-import Generator from "../components/generator/generator";
 import Header from "./header/header";
 
 export const SArrayContext = React.createContext();
@@ -21,7 +20,6 @@ export default function Layout() {
         <div className="route_wrapper">
           <Switch>
             <Route path="/solver" exact component={Solver} />
-            <Route path="/generator" exact component={Generator} />
             <Redirect from="/" to="/solver"></Redirect>
             <Route> 404 Not Found </Route>
           </Switch>

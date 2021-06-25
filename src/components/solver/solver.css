@@ -14,3 +14,14 @@ input {
   height: inherit;
   background: black;
 }
+
+.buttons-wrapper {
+  font-size: 12px;
+  position: relative;
+}
+
+.fill-next::after {
+  content: "fill next";
+  position: absolute;
+  width: 70px;
+}

@@ -2,7 +2,7 @@ import { ActionTypes } from "./constants";
 import { combineReducers } from "redux";
 
 const initialState = {
-  solvedArray: [],
+  type: "solver",
   dimensions: [
     [9, 9],
     [3, 3],
@@ -12,13 +12,11 @@ const initialState = {
 const sudokuReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ActionTypes.SET_GRIDSIZE:
-      return { ...state, dimensions: payload };
-
-    case ActionTypes.SET_SOLVED_ARRAY:
+      // return { ...state, dimensions: payload };
       return state;
 
-    case ActionTypes.RESET_SOLVED_ARRAY:
-      return state;
+    case ActionTypes.SET_SUDOKU_TYPE:
+      return { ...state, type: payload };
 
     default:
       return state;

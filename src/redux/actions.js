@@ -1,16 +1,9 @@
 import { ActionTypes } from "./constants";
 
-export const setSolvedArray = (solvedArray) => {
+export const setSudokuType = (type) => {
   return {
-    type: ActionTypes.SOLVED_SUDOKU_ARRAY,
-    payload: solvedArray,
-  };
-};
-
-export const resetSudokuArray = () => {
-  return {
-    type: ActionTypes.SET_SUDOKU_ARRAY,
-    payload: [],
+    type: ActionTypes.SET_SUDOKU_TYPE,
+    payload: type,
   };
 };
 

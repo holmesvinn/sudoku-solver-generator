@@ -131,6 +131,7 @@ div.title {
   height: 90px;
   display: none;
   box-shadow: 20px 20px 6px palegoldenrod;
+  z-index: 1;
 }
 
 .grid-selection:hover {
