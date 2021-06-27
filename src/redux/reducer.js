@@ -12,8 +12,7 @@ const initialState = {
 const sudokuReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ActionTypes.SET_GRIDSIZE:
-      // return { ...state, dimensions: payload };
-      return state;
+      return { ...state, dimensions: payload };
 
     case ActionTypes.SET_SUDOKU_TYPE:
       return { ...state, type: payload };

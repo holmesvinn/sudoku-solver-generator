@@ -33,10 +33,10 @@ export const getInitialArrayState = (rows, cols) => {
  * @returns
  */
 const findGridbasePositon = (row, col, dimensions) => {
-  const grow = Math.floor(row / dimensions[1][0]);
-  const gcol = Math.floor(col / dimensions[1][1]);
+  const grow = Math.floor(row / dimensions[1][1]);
+  const gcol = Math.floor(col / dimensions[1][0]);
 
-  return [grow * dimensions[1][0], gcol * dimensions[1][1]];
+  return [grow * dimensions[1][1], gcol * dimensions[1][0]];
 };
 
 /**
@@ -63,8 +63,8 @@ const isSafePlace = (board, row, col, value, dimensions) => {
 
   const [grow, gcol] = findGridbasePositon(row, col, dimensions);
 
-  for (let i = grow; i < grow + dimensions[1][0]; i++) {
-    for (let j = gcol; j < gcol + dimensions[1][1]; j++) {
+  for (let i = grow; i < grow + dimensions[1][1]; i++) {
+    for (let j = gcol; j < gcol + dimensions[1][0]; j++) {
       if (board[i][j] === value.toString()) {
         return false;
       }

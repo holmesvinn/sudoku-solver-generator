@@ -133,26 +133,25 @@ export default function Solver() {
 
   const updateDiagnolCubes = (generatorPrefix, possibleNumbers) => {
     updateDiagnolGrid(
-      3,
+      dimensions[1][1],
       0,
       generatorPrefix,
       shuffleArray(shuffleArray(possibleNumbers))
     );
 
     updateDiagnolGrid(
-      3,
+      dimensions[1][1],
       1,
       generatorPrefix,
       shuffleArray(shuffleArray(possibleNumbers))
     );
 
-    if (dimensions[1][1] === 3)
-      updateDiagnolGrid(
-        3,
-        2,
-        generatorPrefix,
-        shuffleArray(shuffleArray(possibleNumbers))
-      );
+    updateDiagnolGrid(
+      dimensions[1][1],
+      2,
+      generatorPrefix,
+      shuffleArray(shuffleArray(possibleNumbers))
+    );
   };
 
   /**
@@ -168,8 +167,9 @@ export default function Solver() {
   const handleGenerate = () => {
     reset();
     let k;
-    let nUnknowns = [3, 4, 5, 6, 7]; //TODO: add the tough feature
-    const nUnknownPositions = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    let nUnknowns = dimensions[1][1] === 3 ? [3, 4, 5, 6, 7] : [2, 3, 4]; //TODO: add the tough feature
+    const nUnknownPositions =
+      dimensions[1][1] === 3 ? [0, 1, 2, 3, 4, 5, 6, 7, 8] : [0, 1, 2, 3, 4, 5];
     const generatorPrefix = [];
     let generatorPrefixSolved = [];
     const inputsElementsList = [];
