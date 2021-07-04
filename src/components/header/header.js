@@ -1,51 +1,34 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { setGridSize, setSudokuType } from "../../redux/actions";
+import { setGridSize, setSudokuType, updateTheme } from "../../redux/actions";
 import "./header.css";
 
 export default function Header() {
-  let right = "generator";
-  const solver = useRef();
+  const left = useRef();
   const dispatch = useDispatch();
-  const generator = useRef();
+  const right = useRef();
+  const [theme, settheme] = React.useState(true);
 
   /**
    * method toggles the view and functionality between sudoku solver and sudoku generator logic
    * method also updates the classes of the buttons so that they can animate
    * @param {solver or generator} btn
    */
-  const handleClick = (btn) => {
-    switch (btn) {
-      case "solver":
-        if (right === "solver") {
-          solver.current.classList.remove("solverToGenerator");
-          solver.current.classList.remove("solverRevert");
-          generator.current.classList.remove("generatorRevert");
+  const handleClick = () => {
+    // left.current.classList.remove("left-active-btn");
+    // left.current.classList.add("right-dormant-btn");
+    // right.current.classList.remove("right-dormant-btn");
+    // right.current.classList.add("left-active-btn");
 
-          setTimeout(() => {
-            generator.current.classList.add("generatorRevert");
-            solver.current.classList.add("solverRevert");
-            right = "generator";
-          });
-        }
-
-        break;
-      case "generator":
-        if (right === "generator") {
-          generator.current.classList.remove("generatorRevert");
-          generator.current.classList.remove("generatorToSolver");
-          solver.current.classList.remove("solverRevert");
-
-          setTimeout(() => {
-            generator.current.classList.add("generatorToSolver");
-            solver.current.classList.add("solverToGenerator");
-            right = "solver";
-          });
-        }
-        break;
-      default:
+    if (right.current.innerText === "Solver") {
+      right.current.innerText = "Generator";
+      left.current.innerText = "Solver";
+    } else {
+      right.current.innerText = "Solver";
+      left.current.innerText = "Generator";
     }
-    dispatch(setSudokuType(btn));
+
+    dispatch(setSudokuType(left.current.innerText));
   };
 
   /**
@@ -67,23 +50,24 @@ export default function Header() {
     dispatch(setGridSize(payload));
   };
 
+  const toggleTheme = () => {
+    settheme(!theme);
+    dispatch(updateTheme(theme));
+  };
+
   return (
     <div className="header card">
       <div className="title">
         <h3>Sudoku</h3>
       </div>
       <div className=" button-wrapper">
-        <button
-          ref={solver}
-          onClick={() => handleClick("solver")}
-          className="solver"
-        >
+        <button ref={left} className="left-active-btn">
           Solver
         </button>
         <button
-          ref={generator}
-          onClick={() => handleClick("generator")}
-          className="generator"
+          ref={right}
+          onClick={() => handleClick()}
+          className="right-dormant-btn"
         >
           Generator
         </button>
@@ -106,13 +90,40 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="grid-size">
+      <div
+        className="grid-size theme-changer"
+        onClick={() => {
+          toggleTheme();
+        }}
+      >
+        {theme ? (
+          <>
+            <img
+              alt="sun"
+              className="sun"
+              src="https://img.icons8.com/color/96/000000/sun--v1.png"
+            ></img>
+          </>
+        ) : (
+          <>
+            <img
+              alt="moon"
+              className="moon"
+              src="https://img.icons8.com/color/48/000000/moon.png"
+            ></img>
+          </>
+        )}
+        {/* {/* <img
+          alt="theme"
+          className="sun"
+          src="https://img.icons8.com/color/96/000000/sun--v1.png"
+        ></img> }
         <img
-          alt="user Icon"
-          className="user-icon"
-          // TODO: update this to theme toggler
-          src="https://freesvg.org/img/abstract-user-flat-1.png"
-        />
+          onClick={() => toggleTheme()}
+          alt="theme"
+          className={themeClass}
+          src={themeSrc}
+        ></img> */}
       </div>
     </div>
   );

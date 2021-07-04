@@ -13,3 +13,10 @@ export const setGridSize = (dimentions) => {
     payload: dimentions,
   };
 };
+
+export const updateTheme = (theme) => {
+  return {
+    type: ActionTypes.SET_SUDOKU_THEME,
+    payload: theme,
+  };
+};

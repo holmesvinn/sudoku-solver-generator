@@ -24,18 +24,27 @@ export default function Solver() {
   let focusNext = false;
   let inputListValues = [];
 
-  const dimensions = useSelector((state) => state.sudoku.dimensions);
+  const solverInputs = React.useRef();
+  let dimensions = useSelector((state) => state.sudoku.dimensions);
   const sudokuType = useSelector((state) => state.sudoku.type);
   const { rows, grid_rows, grid_cols } = getRowsAndCols(dimensions);
-
   /**
    * to check if the dimension changes and update the inputsList by querying from the dom
    */
   React.useEffect(() => {
     console.log("dimensions change");
+    localStorage.setItem("dimension", JSON.stringify(dimensions));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     inputsList = [].slice.call(document.getElementsByClassName("input_el"));
     reset();
+
+    if (dimensions[0][0] !== 6) {
+      solverInputs.current.classList.add("advanced");
+      solverInputs.current.classList.remove("basic");
+    } else {
+      solverInputs.current.classList.remove("advanced");
+      solverInputs.current.classList.add("basic");
+    }
   }, [dimensions, sudokuType]);
 
   /**
@@ -210,7 +219,7 @@ export default function Solver() {
         }}
       >
         <div className="sudoku-area">
-          <div className="solver_inputs">
+          <div className="solver_inputs" ref={solverInputs}>
             {[...Array(grid_rows)].map((_, index) => (
               <div className="grid_rows" key={index}>
                 <GetGridRows />
@@ -226,15 +235,26 @@ export default function Solver() {
             </ButtonContext.Provider>
 
             <div>
-              <input
-                type="checkbox"
-                className="fill-next"
-                name="test"
-                onClick={($event) => {
-                  $event.stopPropagation();
-                  updateFocusType($event.currentTarget);
+              <button
+                onClick={() => {
+                  handleButtonClick(null);
                 }}
-              />
+                style={{ width: "90%" }}
+              ></button>
+            </div>
+
+            <div style={{ marginTop: "20px" }}>
+              <label className="switch">
+                <input
+                  className="fill-next"
+                  type="checkbox"
+                  onClick={($event) => {
+                    $event.stopPropagation();
+                    updateFocusType($event.currentTarget);
+                  }}
+                />
+                <span className="slider round"></span>
+              </label>
             </div>
           </div>
         </div>
@@ -244,13 +264,13 @@ export default function Solver() {
           <button onClick={() => copy(solvedResult, true)}>
             Copy as Plain String
           </button>
-          {sudokuType === "solver" ? (
+          {sudokuType === "Solver" ? (
             <button onClick={() => reset()}>Reset </button>
           ) : (
             <button onClick={handleSolve}>Solve/Validate </button> // TODO: make solve to be a major button and validate to be a dropdown button
           )}
 
-          {sudokuType === "generator" ? (
+          {sudokuType === "Generator" ? (
             <button onClick={handleGenerate}>Generate</button>
           ) : (
             <button onClick={handleSolve}>Solve/Validate</button> // TODO: make solve to be a major button and validate to be a dropdown button

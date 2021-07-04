@@ -1,32 +1,54 @@
 .header {
   display: flex;
   height: auto;
-  border-radius: 15px;
   margin: 10px;
   flex-wrap: wrap;
+  background: linear-gradient(
+    to right,
+    rgba(153, 102, 105, 0.3),
+    rgb(196, 113, 237, 0.3),
+    rgb(32, 149, 175, 0.3)
+  );
+  align-items: center;
 }
 
 .header > div {
   flex: 1 1 auto;
-  text-align: center;
 }
 
 .grid {
   margin-top: calc(60px - 48px);
   height: 45px;
+  text-align: center;
 }
 .grid::after {
+  transform: translateX(-7px);
   content: "";
-  width: 10px;
-  height: 10px;
-  background-color: orange;
+  width: 5px;
+  height: 5px;
+  cursor: pointer;
+  background-color: #4e13ad;
   display: inline-block;
-  box-shadow: 15px 15px 0px 0px orange, 0px 15px 0px 0px orange,
-    15px 0px 0px 0px orange;
+  box-shadow: 7px 7px 0px 0px #4e13ad, 0px 7px 0px 0px #c54062,
+    7px 0px 0px 0px #c54062, 14px 0px 0px 0px #4e13ad, 0px 14px 0px 0px #4e13ad,
+    14px 14px 0px 0px #4e13ad, 14px 7px 0px 0px #c54062,
+    7px 14px 0px 0px #c54062;
 }
 
 .grid-size {
   min-width: 65px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.theme-changer {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.theme-changer > img {
+  width: 40px;
+  transition: all 350ms ease-in;
 }
 
 div.title {
@@ -35,6 +57,11 @@ div.title {
 
 .title > h3 {
   float: right;
+  font-family: "Zen Tokyo Zoo", cursive;
+  font-size: 41px;
+  margin: 0;
+  font-weight: 500;
+  padding-right: 10px;
 }
 
 .user-icon {
@@ -45,22 +72,36 @@ div.title {
 
 .button-wrapper {
   display: inline-block;
+  margin: 10px;
+  margin-left: 0px;
+  text-align: left;
 }
 
 .button-wrapper > button {
-  margin-top: 20px;
+  font-family: "Quicksand", sans-serif;
   position: relative;
+  border: none;
+  background: 0;
 }
 
-.button-wrapper > .solver {
-  float: left;
+.button-wrapper > .left-active-btn {
+  font-family: "Quicksand", sans-serif;
+  font-size: 40px;
+  border: 2px solid brown;
+  transition: 350ms ease-in;
 }
 
-.button-wrapper > .generator {
-  float: right;
+.button-wrapper > .right-dormant-btn {
+  font-family: "Quicksand", sans-serif;
+  position: relative;
+  border: none;
+  background: 0;
+  font-weight: bolder;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-@keyframes solverToGenerator {
+/* @keyframes solverToGenerator {
   from {
     left: calc(1%);
   }
@@ -122,7 +163,7 @@ div.title {
   animation-duration: 1s;
   animation-timing-function: cubic-bezier(0.17, 0.67, 0.47, 1.56);
   right: calc(1%);
-}
+} */
 
 .grid-selection {
   position: absolute;
@@ -130,12 +171,15 @@ div.title {
   width: 185px;
   height: 90px;
   display: none;
-  box-shadow: 20px 20px 6px palegoldenrod;
   z-index: 1;
+  transition: all 350ms ease-in;
+  transform: translateX(-70px);
 }
 
 .grid-selection:hover {
   display: block;
+  box-shadow: 20px 20px 0px #c54062;
+  transition: all 350ms ease-in;
 }
 
 .grid:hover + .grid-selection {
@@ -146,22 +190,24 @@ div.title {
   display: inline-block;
   width: 10px;
   height: 10px;
-  background-color: aqua;
+  background-color: #b13b5f;
   position: absolute;
   left: calc(100% - 50px);
   top: 30px;
-  box-shadow: 15px 0px 0px 0px red, 0px 15px 0px 0px red, 15px 15px 0px 0px red;
+  box-shadow: 15px 0px 0px 0px #ea5e66, 0px 15px 0px 0px #ea5e66,
+    15px 15px 0px 0px #ea5e66;
 }
 .advanced-grid {
   display: inline-block;
   width: 10px;
   height: 10px;
-  background-color: aqua;
+  background-color: #b13b5f;
   position: absolute;
   right: calc(100% - 50px);
   top: 30px;
-  box-shadow: 10px 0px 0px 0px red, 0px 10px 0px 0px red, 0px 15px 0px 0px red,
-    15px 0px 0px 0px red, 15px 15px 0px 0px red;
+  box-shadow: 10px 0px 0px 0px #ea5e66, 0px 10px 0px 0px #ea5e66,
+    0px 15px 0px 0px #ea5e66, 15px 0px 0px 0px #ea5e66,
+    15px 15px 0px 0px #ea5e66;
 }
 
 .advanced-grid::before {
@@ -193,4 +239,29 @@ div.title {
   width: 100px;
   height: 100px;
   right: 0;
+}
+
+.moon {
+  width: 30px !important;
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .header > .title {
+    flex-basis: 50%;
+  }
+
+  .header > .button-wrapper {
+    flex-basis: 45%;
+  }
+
+  .grid-selection {
+    transform: translateX(0px);
+  }
+}
+
+@media screen and (max-width: 438px) {
+  .title > h3 {
+    float: none;
+  }
 }

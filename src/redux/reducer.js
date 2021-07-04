@@ -3,10 +3,12 @@ import { combineReducers } from "redux";
 
 const initialState = {
   type: "solver",
-  dimensions: [
-    [9, 9],
-    [3, 3],
-  ],
+  dimensions: localStorage.getItem("dimension")
+    ? JSON.parse(localStorage.getItem("dimension"))
+    : [
+        [9, 9],
+        [3, 3],
+      ],
 };
 
 const sudokuReducer = (state = initialState, { type, payload }) => {
