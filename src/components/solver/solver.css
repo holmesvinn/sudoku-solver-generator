@@ -11,6 +11,7 @@ input {
   flex-wrap: wrap;
   align-self: center;
   text-align: center;
+  min-width: 280px;
 }
 
 .sudoku-area > .vertical-line {
@@ -245,6 +246,12 @@ label.switch:before {
 .sudoku_inputs {
   min-width: 280px;
   align-self: center;
+}
+
+@media screen and (max-width: 1134px) {
+  .sudoku-area > .vertical-line {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1134px) {

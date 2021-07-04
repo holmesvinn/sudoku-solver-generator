@@ -252,11 +252,7 @@ div.title {
   }
 
   .header > .button-wrapper {
-    flex-basis: 45%;
-  }
-
-  .grid-selection {
-    transform: translateX(0px);
+    flex-basis: 50%;
   }
 }
 
