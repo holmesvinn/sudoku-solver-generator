@@ -50,13 +50,13 @@ const findGridbasePositon = (row, col, dimensions) => {
  */
 const isSafePlace = (board, row, col, value, dimensions) => {
   for (let i = 0; i < board[0].length; i++) {
-    if (board[row][i] === value.toString()) {
+    if (i !== col && board[row][i] === value.toString()) {
       return false;
     }
   }
 
   for (let i = 0; i < board[0].length; i++) {
-    if (board[i][col] === value.toString()) {
+    if (i !== row && board[i][col] === value.toString()) {
       return false;
     }
   }
@@ -65,7 +65,7 @@ const isSafePlace = (board, row, col, value, dimensions) => {
 
   for (let i = grow; i < grow + dimensions[1][1]; i++) {
     for (let j = gcol; j < gcol + dimensions[1][0]; j++) {
-      if (board[i][j] === value.toString()) {
+      if (i !== row && j !== col && board[i][j] === value.toString()) {
         return false;
       }
     }
@@ -147,21 +147,63 @@ const copyToClipBoard = (value) => {
  * @param {string} clickResult
  * @param {boolean} plainString
  */
-export const copy = (clickResult, plainString = false) => {
+export const copy = (clickResult, store, plainString = false) => {
   copyToClipBoard(
     plainString ? clickResult.toString() : JSON.stringify(clickResult)
   );
+
+  store.addNotification({
+    title: plainString ? "Copied as plainString" : "copied to clipboard",
+    message: "sudoku board copied to clipboard",
+    type: "danger",
+    insert: "left",
+    container: "bottom-left",
+    animationIn: ["animate__animated", "animate__fadeIn"],
+    animationOut: ["animate__animated", "animate__fadeOut"],
+    dismiss: {
+      duration: 2000,
+      onScreen: true,
+    },
+  });
 };
 
-export const fillInputs = (solvedArray, inputsElementsList) => {
-  for (let i = 0; i < solvedArray[0].length; i++) {
-    for (let j = 0; j < solvedArray[0].length; j++) {
-      inputsElementsList[i][j].value = solvedArray[i][j];
+export const fillInputs = (solvedArray, inputsElementsList, store) => {
+  try {
+    for (let i = 0; i < solvedArray[0].length; i++) {
+      for (let j = 0; j < solvedArray[0].length; j++) {
+        inputsElementsList[i][j].value = solvedArray[i][j];
+      }
     }
+  } catch (error) {
+    store.addNotification({
+      title: "Not valid",
+      message: "Try with valid inputs",
+      type: "danger",
+      insert: "left",
+      container: "bottom-left",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 2000,
+        onScreen: true,
+      },
+    });
   }
 };
 
-export const solveSudokuArray = (sudokuArray, dimensions) => {
+export const solveSudokuArray = (sudokuArray, dimensions, store) => {
+  for (let i = 0; i < sudokuArray[0].length; i++) {
+    for (let j = 0; j < sudokuArray[0].length; j++) {
+      if (
+        sudokuArray[i][j] !== "." &&
+        (sudokuArray[i][j] > 0 && sudokuArray[i][j]) < 10
+      ) {
+        if (!isSafePlace(sudokuArray, i, j, sudokuArray[i][j], dimensions)) {
+          return [];
+        }
+      }
+    }
+  }
   solveSudoku(JSON.parse(JSON.stringify(sudokuArray)), dimensions);
   return Boardd;
 };

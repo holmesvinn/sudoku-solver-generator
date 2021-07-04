@@ -9,6 +9,8 @@ input {
   justify-content: space-evenly;
   margin: 30px;
   flex-wrap: wrap;
+  align-self: center;
+  text-align: center;
 }
 
 .sudoku-area > .vertical-line {
@@ -16,12 +18,15 @@ input {
   height: 130px;
   background: black;
   align-self: center;
+  left: 5%;
+  position: relative;
 }
 
 .buttons-wrapper {
   font-size: 12px;
   position: relative;
   align-self: center;
+  min-width: 280px;
 }
 
 .fill-next::after {
@@ -31,7 +36,22 @@ input {
 }
 
 .buttons-Area {
-  float: right;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.buttons-Area > button {
+  border-radius: 0px;
+  background: linear-gradient(0, #d34469, #b13a58);
+  box-shadow: 9px 7px 3px #702438;
+  border: navajowhite;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  color: #ffa600;
+  padding: 6px 15px 6px 15px;
 }
 
 input {
@@ -39,6 +59,8 @@ input {
   border: 0.5px solid #d84a64;
   width: 25px;
   height: 25px;
+  font-size: larger;
+  font-weight: 500;
 }
 
 .advanced
@@ -124,7 +146,7 @@ input {
 .buttons-wrapper > div > button {
   border-radius: 4px;
   background: linear-gradient(45deg, #d3555c, #fa656d);
-  box-shadow: 20px -20px 75px #cc5259, -20px 20px 75px #ff6a73;
+  box-shadow: 9px -5px 4px #cc5259, -20px 20px 75px #ff6a73;
   border: 0px;
   width: 42px;
   height: 42px;
@@ -148,10 +170,10 @@ input {
   width: 60px;
   height: 34px;
   float: right;
+  left: -60px;
 }
 
 label.switch:before {
-  color: black;
   content: "FillNext";
   position: relative;
   left: -72px;
@@ -160,6 +182,9 @@ label.switch:before {
   font-weight: 600;
   height: 100px;
   margin-top: 21px;
+  color: #fe9a3f;
+  font-weight: bolder;
+  font-size: 20px;
 }
 
 /* Hide default HTML checkbox */
@@ -217,7 +242,12 @@ label.switch:before {
   border-radius: 50%;
 }
 
-@media screen and (max-width: 768px) {
+.sudoku_inputs {
+  min-width: 280px;
+  align-self: center;
+}
+
+@media screen and (max-width: 1134px) {
   .sudoku-area > .vertical-line {
     display: none;
   }

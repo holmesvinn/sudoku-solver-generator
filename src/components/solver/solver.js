@@ -9,6 +9,8 @@ import {
   shuffleArray,
 } from "../../utils/logics";
 import { GetGridRows, NumpadButtons } from "./gridUnits";
+import "react-notifications-component/dist/theme.css";
+import { store } from "react-notifications-component";
 
 export const GridContext = React.createContext();
 export const ButtonContext = React.createContext();
@@ -64,8 +66,8 @@ export default function Solver() {
       );
       inputsElementsList.push(inputsList.slice(k, k + rows));
     }
-    solvedResult = solveSudokuArray(SudokuArray, dimensions);
-    fillInputs(solvedResult, inputsElementsList);
+    solvedResult = solveSudokuArray(SudokuArray, dimensions, store);
+    fillInputs(solvedResult, inputsElementsList, store);
   };
 
   /**
@@ -239,7 +241,7 @@ export default function Solver() {
                 onClick={() => {
                   handleButtonClick(null);
                 }}
-                style={{ width: "90%" }}
+                style={{ width: "160px" }}
               ></button>
             </div>
 
@@ -260,20 +262,20 @@ export default function Solver() {
         </div>
 
         <div className="buttons-Area">
-          <button onClick={() => copy(solvedResult, false)}>Copy</button>
-          <button onClick={() => copy(solvedResult, true)}>
+          <button onClick={() => copy(solvedResult, store, false)}>Copy</button>
+          <button onClick={() => copy(solvedResult, store, true)}>
             Copy as Plain String
           </button>
           {sudokuType === "Solver" ? (
             <button onClick={() => reset()}>Reset </button>
           ) : (
-            <button onClick={handleSolve}>Solve/Validate </button> // TODO: make solve to be a major button and validate to be a dropdown button
+            <button onClick={handleSolve}>Solve </button> // TODO: make solve to be a major button and validate to be a dropdown button
           )}
 
           {sudokuType === "Generator" ? (
             <button onClick={handleGenerate}>Generate</button>
           ) : (
-            <button onClick={handleSolve}>Solve/Validate</button> // TODO: make solve to be a major button and validate to be a dropdown button
+            <button onClick={handleSolve}>Solve</button> // TODO: make solve to be a major button and validate to be a dropdown button
           )}
         </div>
       </GridContext.Provider>

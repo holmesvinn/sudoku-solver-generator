@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setGridSize, setSudokuType, updateTheme } from "../../redux/actions";
 import "./header.css";
+import { store } from "react-notifications-component";
 
 export default function Header() {
   const left = useRef();
@@ -53,6 +54,20 @@ export default function Header() {
   const toggleTheme = () => {
     settheme(!theme);
     dispatch(updateTheme(theme));
+
+    store.addNotification({
+      title: "New Themes on way",
+      message: "15 more themes on the way",
+      type: "danger",
+      insert: "left",
+      container: "bottom-left",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 2000,
+        onScreen: true,
+      },
+    });
   };
 
   return (
