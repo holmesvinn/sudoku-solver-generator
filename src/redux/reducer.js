@@ -2,7 +2,7 @@ import { ActionTypes } from "./constants";
 import { combineReducers } from "redux";
 
 const initialState = {
-  type: "solver",
+  type: "Solver",
   dimensions: localStorage.getItem("dimension")
     ? JSON.parse(localStorage.getItem("dimension"))
     : [
