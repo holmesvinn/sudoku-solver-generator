@@ -99,6 +99,9 @@ div.title {
   font-weight: bolder;
   cursor: pointer;
   font-size: 16px;
+  text-decoration-line: underline;
+  text-decoration-color: blueviolet;
+  text-decoration-thickness: 2px;
 }
 
 /* @keyframes solverToGenerator {
