@@ -248,6 +248,10 @@ label.switch:before {
   align-self: center;
 }
 
+.solver_inputs {
+  align-self: center;
+}
+
 @media screen and (max-width: 1134px) {
   .sudoku-area > .vertical-line {
     display: none;
