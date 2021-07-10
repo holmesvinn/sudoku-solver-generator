@@ -43,5 +43,5 @@ code {
   justify-content: center;
   background: url("./assets/stacked-steps-haikei2.svg");
   height: 100vh;
-  background-size: contain;
+  background-size: cover;
 }
